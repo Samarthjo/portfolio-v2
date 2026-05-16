@@ -504,15 +504,15 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
     cnt.textContent=String(n).padStart(2,'0');
     lbar.style.width=n+'%';
     if(n===100){
-      setTimeout(()=>{
-        loader.classList.add('out');
-        document.body.style.overflow='';
-        ['h-circle','h-name','h-title','h-sub','h-scroll'].forEach((id,i)=>{
-          setTimeout(()=>document.getElementById(id).classList.add('in'),i*160);
-        });
-      },500);
-    }
-  },38);
+    setTimeout(()=>{
+      loader.classList.add('out');
+      document.body.style.overflow='';
+      ['h-circle','h-name','h-title','h-sub','h-scroll'].forEach((id,i)=>{
+        setTimeout(()=>document.getElementById(id).classList.add('in'),i*160);
+      });
+    },500);
+  }
+},38);
 
   // CURSOR
   const cd=document.getElementById('cd');
