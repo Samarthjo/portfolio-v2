@@ -55,9 +55,15 @@ nav.scrolled{background:rgba(8,8,8,.88);border-bottom:1px solid var(--border);ba
 #hero{min-height:100vh;padding:0 3.5rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
 .h-circle{position:absolute;width:clamp(320px,60vw,760px);height:clamp(320px,60vw,760px);background:var(--accent);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-52%);z-index:0;opacity:0;transition:opacity .8s ease;pointer-events:none}
 .h-circle.in{opacity:1}
-.h-name{font-family:var(--font-d);font-size:clamp(.9rem,1.8vw,1.3rem);letter-spacing:.5em;color:var(--bg);position:relative;z-index:2;padding-top:5.5rem;margin-bottom:1.4rem;opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.h-name{font-family:var(--font-h);font-size:.72rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);position:relative;z-index:2;padding-top:0;margin-bottom:2rem;opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .h-name.in{opacity:1;transform:translateY(0)}
-h1.h-title{font-family:var(--font-d);font-size:clamp(2.5rem,5.5vw,5.5rem);line-height:.88;position:relative;z-index:2;margin-bottom:0;color:var(--bg);opacity:0;transform:translateY(28px);transition:opacity .8s ease .2s,transform .8s ease .2s}
+.h-badge{position:absolute;top:5.5rem;right:3.5rem;display:flex;align-items:center;gap:.7rem;font-family:var(--font-h);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);border:1px solid var(--border);padding:.65rem 1.3rem;background:rgba(237,235,228,.04);opacity:0;transition:opacity .7s ease .6s}
+.h-badge.in{opacity:1}
+.h-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.h-vert{position:absolute;right:3.5rem;bottom:4rem;font-family:var(--font-h);font-size:.6rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:rgba(237,235,228,.18);writing-mode:vertical-rl;text-orientation:mixed;opacity:0;transition:opacity .7s ease .8s}
+.h-vert.in{opacity:1}
+h1.h-title{font-family:var(--font-d);font-size:clamp(2.5rem,5.5vw,5.5rem);line-height:.88;position:relative;z-index:2;margin-bottom:0;color:var(--text);opacity:0;transform:translateY(28px);transition:opacity .8s ease .2s,transform .8s ease .2s}
 h1.h-title.in{opacity:1;transform:translateY(0)}
 h1.h-title .acc{color:var(--accent)}
 h1.h-title .out{-webkit-text-stroke:1px rgba(237,235,228,.45);color:transparent}
@@ -222,7 +228,8 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
 
 <!-- HERO -->
 <section id="hero">
-  
+  <div class="h-badge" id="h-badge"><span class="h-badge-dot"></span>Currently @ Ernst & Young</div>
+  <div class="h-vert" id="h-vert">Bengaluru &nbsp;·&nbsp; 2025</div>
   <div class="h-name" id="h-name">SAMARTH JOSHI</div>
   <h1 class="h-title" id="h-title">
     Making<br>
@@ -487,7 +494,7 @@ const iv=setInterval(()=>{
     setTimeout(()=>{
       loader.classList.add('out');
       document.body.style.overflow='';
-      ['h-circle','h-name','h-title','h-sub','h-scroll'].forEach((id,i)=>{
+      ['h-name','h-title','h-sub','h-scroll','h-badge','h-vert'].forEach((id,i)=>{
         setTimeout(()=>{const el=document.getElementById(id);if(el)el.classList.add('in');},i*180);
       });
     },500);
