@@ -480,8 +480,8 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
       setTimeout(()=>{
         loader.classList.add('out');
         document.body.style.overflow='';
-        ['h-eye','h-title','h-sub','h-scroll'].forEach((id,i)=>{
-          setTimeout(()=>document.getElementById(id).classList.add('in'),i*180);
+        ['h-circle','h-name','h-title','h-sub','h-scroll'].forEach((id,i)=>{
+          setTimeout(()=>document.getElementById(id).classList.add('in'),i*160);
         });
       },500);
     }
