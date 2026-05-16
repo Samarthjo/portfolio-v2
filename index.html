@@ -124,7 +124,7 @@ h1.h-title .out{-webkit-text-stroke:1px rgba(237,235,228,.45);color:transparent}
 .cl-list{list-style:none}
 .cl-item{display:flex;align-items:flex-start;justify-content:space-between;gap:3rem;padding:2.5rem 0;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:default;opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
 .cl-item.in{opacity:1;transform:translateY(0)}
-.cl-item::before{content:'';position:absolute;inset:0;background:rgba(197,255,65,.025);transform:translateX(-101%);transition:transform .45s cubic-bezier(.25,.46,.45,.94)}
+.cl-item::before{content:'';position:absolute;inset:0;background:rgba(197,255,65,.025);transform:translateX(-101%);transition:transform .45s cubic-bezier(.25,.46,.45,.94);pointer-events:none}
 .cl-item:hover::before{transform:translateX(0)}
 .cl-left{flex:1}
 .cl-name{font-family:var(--font-d);font-size:clamp(2.8rem,6.5vw,5.5rem);line-height:1;margin-bottom:.6rem;transition:color .3s}
