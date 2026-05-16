@@ -480,25 +480,26 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
 <script>
 (function(){
   // LOADER
-  const loader=document.getElementById('loader');
-const lbtn=document.getElementById('l-btn');
-const lcurtain=document.getElementById('l-curtain');
+const loader=document.getElementById('loader');
+const cnt=document.getElementById('cnt');
+const lbar=document.getElementById('lbar');
 document.body.style.overflow='hidden';
-lbtn.addEventListener('click',()=>{
-  lbtn.style.pointerEvents='none';
-  lcurtain.classList.add('rise');
-  setTimeout(()=>{
-    loader.style.opacity='0';
-    lcurtain.classList.add('exit');
-    document.body.style.overflow='';
+let n=0;
+const iv=setInterval(()=>{
+  n+=Math.floor(Math.random()*5)+1;
+  if(n>=100){n=100;clearInterval(iv)}
+  cnt.textContent=String(n).padStart(2,'0');
+  lbar.style.width=n+'%';
+  if(n===100){
     setTimeout(()=>{
-      loader.style.display='none';
+      loader.classList.add('out');
+      document.body.style.overflow='';
       ['h-circle','h-name','h-title','h-sub','h-scroll'].forEach((id,i)=>{
         setTimeout(()=>{const el=document.getElementById(id);if(el)el.classList.add('in');},i*180);
       });
-    },400);
-  },650);
-});
+    },500);
+  }
+},38);
 
   // CURSOR
   const cd=document.getElementById('cd');
