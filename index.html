@@ -632,12 +632,6 @@ const iv=setInterval(()=>{
   window.addEventListener('scroll',()=>{
     if(bgyr)bgyr.style.transform=`translateY(${scrollY*.35}px)`;
   },{passive:true});
-  // SMOOTH SCROLL
-if(typeof Lenis !== 'undefined'){
-  const lenis=new Lenis({duration:1.2,easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t))});
-  function raf(time){lenis.raf(time);requestAnimationFrame(raf)}
-  requestAnimationFrame(raf);
-}
 
 // STATS COUNTER
 const statEls=document.querySelectorAll('.stat-num');
