@@ -129,23 +129,6 @@ h1.h-title .out{-webkit-text-stroke:1px rgba(237,235,228,.45);color:transparent}
 .rec-org{font-family:var(--font-h);font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem}
 .rec-desc{font-size:.83rem;color:var(--muted);line-height:1.75}
 
-  /* TERMINAL */
-.h-terminal{position:absolute;right:3.5rem;top:50%;transform:translateY(-50%);width:clamp(280px,32vw,420px);background:#0f0f0f;border:1px solid rgba(197,255,65,.2);border-radius:4px;padding:0;opacity:0;transition:opacity .8s ease .6s;font-family:'Courier New',monospace}
-.h-terminal.in{opacity:1}
-.term-bar{background:#1a1a1a;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(197,255,65,.1);border-radius:4px 4px 0 0}
-.term-dot{width:10px;height:10px;border-radius:50%}
-.term-dot:nth-child(1){background:#ff5f57}
-.term-dot:nth-child(2){background:#febc2e}
-.term-dot:nth-child(3){background:#28c840}
-.term-title{font-family:var(--font-h);font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--muted);margin-left:.5rem}
-.term-body{padding:1.5rem;min-height:200px}
-.term-line{font-size:.78rem;line-height:1.9;white-space:pre;display:block;min-height:1.4em}
-.term-prompt{color:var(--accent)}
-.term-cmd{color:#e2e8f0}
-.term-out{color:rgba(237,235,228,.4)}
-.term-out.green{color:var(--accent)}
-.term-cursor{display:inline-block;width:8px;height:1em;background:var(--accent);animation:blink .8s infinite;vertical-align:text-bottom;margin-left:2px}
-
 /* EXPERIENCE */
 #experience{border-top:1px solid var(--border)}
 .exp-intro{font-family:var(--font-h);font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;line-height:1.3;max-width:680px;margin-bottom:5rem}
@@ -285,13 +268,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
     I work at <strong>EY</strong> by day and build things on the side. Mostly obsessed with <strong>AI, automation,</strong> and how workflows can be radically leaner than they currently are. Most business processes are broken — and nobody's fixing them because everyone's too busy being busy.
   </p>
   <div class="h-scroll" id="h-scroll">↓ Scroll to explore</div>
-  <div class="h-terminal" id="h-terminal">
-  <div class="term-bar">
-    <span class="term-dot"></span>
-    <span class="term-dot"></span>
-    <span class="term-dot"></span>
-    <span class="term-title">samarth@ey ~ python</span>
-  </div>
+
   <div class="term-body" id="term-body"></div>
 </div>
 </section>
@@ -603,7 +580,7 @@ const iv=setInterval(()=>{
     setTimeout(()=>{
       loader.classList.add('out');
       document.body.style.overflow='';
-      ['h-name','h-title','h-sub','h-scroll','h-badge','h-vert','h-terminal'].forEach((id,i)=>{
+      ['h-name','h-title','h-sub','h-scroll','h-badge','h-vert'].forEach((id,i)=>{
         setTimeout(()=>{const el=document.getElementById(id);if(el)el.classList.add('in');},i*180);
       });
     },500);
@@ -695,73 +672,7 @@ document.querySelectorAll('.con-email,.l-btn').forEach(btn=>{
     btn.style.transition='transform 0.6s cubic-bezier(.25,.46,.45,.94)';
   });
 });
-  // TERMINAL ANIMATION
-const termLines=[
-  {type:'prompt', text:'python3 workflow_audit.py'},
-  {type:'out',    text:'Scanning processes...'},
-  {type:'out',    text:'Found 47 inefficiencies.'},
-  {type:'prompt', text:'fix_it(tool="AI")'},
-  {type:'out',    text:'Applying fixes...'},
-  {type:'green',  text:'✓ Efficiency +10x'},
-  {type:'green',  text:'✓ Hours saved: 5/week'},
-  {type:'prompt', text:'deploy()'},
-  {type:'green',  text:'✓ Done. Ship it.'},
-];
-function runTerminal(){
-  const body=document.getElementById('term-body');
-  if(!body)return;
-  body.innerHTML='';
-  let lineIndex=0;
-  let charIndex=0;
-  let currentEl=null;
-  const cursor=document.createElement('span');
-  cursor.className='term-cursor';
-
-  function nextLine(){
-    if(lineIndex>=termLines.length){
-      setTimeout(()=>{
-        body.innerHTML='';
-        lineIndex=0;charIndex=0;
-        runTerminal();
-      },3000);
-      return;
-    }
-    const l=termLines[lineIndex];
-    currentEl=document.createElement('span');
-    currentEl.className='term-line';
-    const prefix=l.type==='prompt'
-      ?'<span class="term-prompt">>>> </span>'
-      :'&nbsp;&nbsp;&nbsp;&nbsp;';
-    currentEl.innerHTML=prefix;
-    body.appendChild(currentEl);
-    body.appendChild(cursor);
-    typeChar(l);
-  }
-
-  function typeChar(l){
-    const text=l.text;
-    if(charIndex<text.length){
-      const span=currentEl.querySelector('.term-typed')||document.createElement('span');
-      if(!currentEl.querySelector('.term-typed')){
-        span.className=l.type==='out'?'term-out':l.type==='green'?'term-out green':'term-cmd';
-        span.className+=' term-typed';
-        currentEl.appendChild(span);
-      }
-      span.textContent+=text[charIndex];
-      charIndex++;
-      currentEl.appendChild(cursor);
-      setTimeout(()=>typeChar(l), l.type==='prompt'?55:18);
-    } else {
-      charIndex=0;
-      lineIndex++;
-      setTimeout(nextLine, l.type==='prompt'?400:120);
-    }
-  }
-  nextLine();
-}
-
-// Start terminal after hero animates in
-setTimeout(runTerminal, 1800);
+ 
 })();
 </script>
 </body>
