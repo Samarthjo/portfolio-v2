@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samarth Joshi — Off Duty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#080808;--text:#EDEBE4;--accent:#C5FF41;
+  --muted:rgba(237,235,228,.38);--border:rgba(237,235,228,.07);--card:rgba(237,235,228,.03);
+  --font-d:'Bebas Neue',sans-serif;--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-weight:300;overflow-x:hidden;cursor:none;line-height:1.6}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:9990}
+
+/* CURSOR */
+#cd,#cr{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);border-radius:50%}
+#cd{width:7px;height:7px;background:var(--accent)}
+#cr{width:34px;height:34px;border:1px solid rgba(197,255,65,.45);transition:width .25s,height .25s,border-color .25s,background .25s}
+#cr.big{width:60px;height:60px;border-color:var(--accent);background:rgba(197,255,65,.05)}
+
+/* BACK NAV */
+.back-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.6rem 3.5rem;display:flex;align-items:center;justify-content:space-between;transition:background .35s,border-bottom .35s}
+.back-nav.scrolled{background:rgba(8,8,8,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+.back-link{font-family:var(--font-h);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.7rem;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.nav-tag{font-family:var(--font-h);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.nav-tag span{color:var(--accent)}
+
+/* HERO */
+#od-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3.5rem 5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.od-bg-text{position:absolute;top:50%;right:-2rem;transform:translateY(-50%);font-family:var(--font-d);font-size:clamp(12rem,28vw,26rem);color:rgba(197,255,65,.03);line-height:1;pointer-events:none;user-select:none;white-space:nowrap}
+.od-label{font-family:var(--font-h);font-size:.7rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;opacity:0;transition:opacity .8s ease .1s}
+.od-label.in{opacity:1}
+.od-title{font-family:var(--font-d);font-size:clamp(5rem,16vw,15rem);line-height:.88;overflow:hidden}
+.od-title-line{display:block;overflow:hidden}
+.od-title-inner{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.od-title-inner.in{transform:translateY(0)}
+.acc{color:var(--accent)}
+.od-sub{font-family:var(--font-h);font-size:clamp(1rem,1.8vw,1.25rem);font-weight:400;color:var(--muted);margin-top:2rem;max-width:580px;opacity:0;transform:translateY(20px);transition:opacity .8s ease .55s,transform .8s ease .55s}
+.od-sub.in{opacity:1;transform:translateY(0)}
+.od-sub strong{color:var(--text)}
+.od-scroll{font-family:var(--font-h);font-size:.63rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:2.5rem;display:flex;align-items:center;gap:1rem;opacity:0;transition:opacity .8s ease .75s}
+.od-scroll.in{opacity:1}
+
+/* SECTION COMMON */
+.od-sec{padding:6rem 3.5rem;max-width:1420px;margin:0 auto;border-top:1px solid var(--border)}
+.od-sec-num{font-family:var(--font-d);font-size:.8rem;color:var(--accent);letter-spacing:.2em;margin-bottom:.5rem;opacity:.7}
+.od-sec-title{font-family:var(--font-d);font-size:clamp(3rem,7vw,6.5rem);line-height:.92;margin-bottom:.5rem}
+.od-sec-sub{font-family:var(--font-h);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4rem}
+
+/* SCROLL REVEAL */
+.sr{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.sr.in{opacity:1;transform:translateY(0)}
+
+/* F1 */
+#f1{position:relative;overflow:hidden}
+.f1-ghost{position:absolute;top:50%;right:-3rem;transform:translateY(-50%);font-family:var(--font-d);font-size:clamp(14rem,32vw,30rem);color:rgba(197,255,65,.04);line-height:1;pointer-events:none;animation:ghostfloat 8s ease-in-out infinite}
+@keyframes ghostfloat{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(18px)}}
+.speed-lines{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.05}
+.speed-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--accent));animation:speedline 2.5s linear infinite}
+@keyframes speedline{from{transform:translateX(-100%) scaleX(.5)}to{transform:translateX(200%) scaleX(1.5)}}
+.f1-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
+.f1-tag-pill{font-family:var(--font-h);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(197,255,65,.3);padding:.45rem 1rem;display:inline-block;margin-bottom:1.5rem}
+.f1-driver{font-family:var(--font-d);font-size:clamp(3.5rem,9vw,8rem);line-height:.88;margin-bottom:1.5rem}
+.f1-driver span{color:var(--accent)}
+.f1-take{font-family:var(--font-h);font-size:1.05rem;font-weight:600;line-height:1.55;border-left:2px solid var(--accent);padding-left:1.5rem;color:rgba(237,235,228,.85)}
+.f1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.f1-stat{padding:2rem 1.5rem;border:1px solid var(--border);background:var(--card);text-align:center;transition:background .3s,border-color .3s}
+.f1-stat:hover{background:rgba(197,255,65,.04);border-color:rgba(197,255,65,.2)}
+.f1-stat-n{font-family:var(--font-d);font-size:3rem;color:var(--accent);display:block;line-height:1}
+.f1-stat-l{font-family:var(--font-h);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.6rem;display:block}
+
+/* ANIME */
+.anime-watching{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-h);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
+.anime-watching::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;flex-shrink:0}
+.anime-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.anime-card{padding:2rem 1.5rem;border:1px solid var(--border);background:var(--card);position:relative;overflow:hidden;transition:background .3s,border-color .3s}
+.anime-card:hover{background:rgba(197,255,65,.04);border-color:rgba(197,255,65,.2)}
+.anime-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.anime-card:hover::after{transform:scaleX(1)}
+.anime-num{font-family:var(--font-d);font-size:.75rem;color:var(--accent);opacity:.5;margin-bottom:.8rem}
+.anime-name{font-family:var(--font-h);font-size:1rem;font-weight:800;margin-bottom:.5rem;line-height:1.2}
+.anime-take{font-size:.78rem;color:var(--muted);line-height:1.65}
+
+/* SPORTS GAMING */
+.sg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.sg-card{padding:2.5rem 2rem;border:1px solid var(--border);background:var(--card);transition:background .3s,border-color .3s}
+.sg-card:hover{background:rgba(197,255,65,.04);border-color:rgba(197,255,65,.15)}
+.sg-icon{font-size:2.2rem;margin-bottom:1.2rem;display:block}
+.sg-title{font-family:var(--font-h);font-size:1.15rem;font-weight:800;margin-bottom:.8rem}
+.sg-desc{font-size:.84rem;color:var(--muted);line-height:1.75}
+.sg-games{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.5rem}
+.sg-games li{font-family:var(--font-h);font-size:.78rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.sg-games li::before{content:'›';color:var(--accent);font-size:1rem}
+
+/* MUSIC */
+.music-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.music-artists{display:flex;flex-direction:column}
+.music-artist{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 0;border-bottom:1px solid var(--border);transition:padding-left .25s}
+.music-artist:hover{padding-left:.5rem}
+.music-artist-name{font-family:var(--font-d);font-size:clamp(2rem,4.5vw,3.5rem);line-height:1;transition:color .25s}
+.music-artist:hover .music-artist-name{color:var(--accent)}
+.music-artist-vibe{font-family:var(--font-h);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.music-right{display:flex;flex-direction:column;gap:2.5rem}
+.music-playing-label{font-family:var(--font-h);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.music-playing-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.8s infinite}
+.music-note{font-family:var(--font-h);font-size:.95rem;font-weight:600;color:rgba(237,235,228,.7);line-height:1.6;max-width:300px}
+.eq{display:flex;align-items:flex-end;gap:5px;height:64px}
+.eq-bar{width:9px;background:var(--accent);border-radius:2px 2px 0 0;opacity:.85}
+.eq-bar:nth-child(1){animation:eq1 1.1s ease-in-out infinite}
+.eq-bar:nth-child(2){animation:eq1 1.3s ease-in-out infinite .15s}
+.eq-bar:nth-child(3){animation:eq1 .9s ease-in-out infinite .05s}
+.eq-bar:nth-child(4){animation:eq1 1.2s ease-in-out infinite .3s}
+.eq-bar:nth-child(5){animation:eq1 1s ease-in-out infinite .1s}
+.eq-bar:nth-child(6){animation:eq1 1.4s ease-in-out infinite .2s}
+.eq-bar:nth-child(7){animation:eq1 .95s ease-in-out infinite .35s}
+.eq-bar:nth-child(8){animation:eq1 1.15s ease-in-out infinite .08s}
+@keyframes eq1{0%,100%{height:6px}50%{height:56px}}
+
+/* REELS */
+.reels-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.reels-text h3{font-family:var(--font-d);font-size:clamp(2.5rem,6vw,5.5rem);line-height:.92;margin-bottom:1.8rem}
+.reels-text h3 span{color:var(--accent)}
+.reels-text p{color:var(--muted);font-size:.97rem;line-height:1.85;margin-bottom:2.5rem;max-width:420px}
+.reels-btn{display:inline-flex;align-items:center;gap:.8rem;font-family:var(--font-h);font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:1.1rem 2.5rem;text-decoration:none;transition:transform .25s,box-shadow .25s}
+.reels-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(197,255,65,.3)}
+.reels-card{border:1px solid var(--border);background:var(--card);padding:3rem 2.5rem;display:flex;flex-direction:column;gap:1.8rem;position:relative;overflow:hidden}
+.reels-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),transparent)}
+.reels-handle{font-family:var(--font-d);font-size:clamp(1.3rem,2.5vw,2rem);line-height:1.1}
+.reels-handle span{color:var(--accent)}
+.reels-desc{font-size:.85rem;color:var(--muted);line-height:1.75}
+.reels-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.reels-tag{font-family:var(--font-h);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border);padding:.35rem .85rem;color:var(--muted);transition:border-color .2s,color .2s}
+.reels-tag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* FOOTER */
+.od-footer{border-top:1px solid var(--border);padding:2.5rem 3.5rem;display:flex;align-items:center;justify-content:space-between;max-width:1420px;margin:0 auto}
+.od-footer-l,.od-footer-r{font-family:var(--font-h);font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.od-footer-r a{color:var(--accent);text-decoration:none;transition:opacity .2s}
+.od-footer-r a:hover{opacity:.7}
+
+/* KEYFRAMES */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* MOBILE */
+@media(max-width:900px){
+  .back-nav,.od-sec,.od-footer{padding-left:1.5rem;padding-right:1.5rem}
+  #od-hero{padding:0 1.5rem 4rem}
+  .f1-grid,.music-grid,.reels-inner{grid-template-columns:1fr}
+  .anime-grid{grid-template-columns:1fr 1fr}
+  .sg-grid{grid-template-columns:1fr}
+  .od-footer{flex-direction:column;gap:.8rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+
+<!-- BACK NAV -->
+<nav class="back-nav" id="back-nav">
+  <a href="index.html" class="back-link">Back to Portfolio</a>
+  <span class="nav-tag">Samarth Joshi — <span>Off Duty</span></span>
+</nav>
+
+<!-- HERO -->
+<section id="od-hero">
+  <div class="od-bg-text">LIFE</div>
+  <p class="od-label" id="od-label">Beyond the resume</p>
+  <h1 class="od-title">
+    <span class="od-title-line"><span class="od-title-inner" id="ot1">OFF</span></span>
+    <span class="od-title-line"><span class="od-title-inner acc" id="ot2" style="transition-delay:.12s">DUTY.</span></span>
+  </h1>
+  <p class="od-sub" id="od-sub">
+    21 years old. Analyst by week.<br><strong>Everything else on weekends.</strong>
+  </p>
+  <div class="od-scroll" id="od-scroll">↓ Scroll through</div>
+</section>
+
+<!-- F1 -->
+<section id="f1" class="od-sec">
+  <div class="speed-lines" id="speed-lines"></div>
+  <div class="f1-ghost">MAX</div>
+  <div class="od-sec-num sr">01</div>
+  <h2 class="od-sec-title sr">Speed.</h2>
+  <p class="od-sec-sub sr">Formula 1 — the only sport that matters on race weekends</p>
+  <div class="f1-grid">
+    <div class="sr">
+      <div class="f1-tag-pill">Red Bull Racing · Current World Champion</div>
+      <div class="f1-driver">MAX<br><span>VERSTAPPEN</span></div>
+      <p class="f1-take">"Best of his generation. Most dominant driver in modern F1 history. Not even a debate — he is the GOAT."</p>
+    </div>
+    <div class="f1-stats sr" style="transition-delay:.15s">
+      <div class="f1-stat">
+        <span class="f1-stat-n">4×</span>
+        <span class="f1-stat-l">World Championships</span>
+      </div>
+      <div class="f1-stat">
+        <span class="f1-stat-n">62+</span>
+        <span class="f1-stat-l">Race Wins</span>
+      </div>
+      <div class="f1-stat">
+        <span class="f1-stat-n">GOAT</span>
+        <span class="f1-stat-l">No debate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIME -->
+<section id="anime" class="od-sec">
+  <div class="od-sec-num sr">02</div>
+  <h2 class="od-sec-title sr">Late nights.</h2>
+  <p class="od-sec-sub sr">Anime — no skips, no spoilers, no skipping OPs</p>
+  <div class="anime-watching sr">Always rewatching something</div>
+  <div class="anime-grid">
+    <div class="anime-card sr"><div class="anime-num">01</div><div class="anime-name">Death Note</div><div class="anime-take">The original mind game. Light Yagami understood power before anyone else did.</div></div>
+    <div class="anime-card sr" style="transition-delay:.07s"><div class="anime-num">02</div><div class="anime-name">Attack on Titan</div><div class="anime-take">Best story arc in anime history. The ending hits different every rewatch.</div></div>
+    <div class="anime-card sr" style="transition-delay:.14s"><div class="anime-num">03</div><div class="anime-name">Jujutsu Kaisen</div><div class="anime-take">Gojo Satoru is the definition of unbothered. The animation alone is worth every minute.</div></div>
+    <div class="anime-card sr" style="transition-delay:.21s"><div class="anime-num">04</div><div class="anime-name">Haikyuu!!</div><div class="anime-take">Makes you want to be better at literally anything. Most motivating sports anime, period.</div></div>
+    <div class="anime-card sr" style="transition-delay:.28s"><div class="anime-num">05</div><div class="anime-name">Blue Lock</div><div class="anime-take">Ego over everything. The mindset of a striker applied to real life genuinely hits hard.</div></div>
+    <div class="anime-card sr" style="transition-delay:.35s"><div class="anime-num">06</div><div class="anime-name">Hell's Paradise</div><div class="anime-take">Dark, beautiful, completely underrated. Gabimaru's arc deserves more recognition.</div></div>
+    <div class="anime-card sr" style="transition-delay:.42s"><div class="anime-num">07</div><div class="anime-name">Monster</div><div class="anime-take">Johan Liebert is the most terrifying villain in fiction. Slow burn. Worth every episode.</div></div>
+    <div class="anime-card sr" style="transition-delay:.49s"><div class="anime-num">+ more</div><div class="anime-name">& many more...</div><div class="anime-take">The watchlist never ends. Send recommendations — always open to the next obsession.</div></div>
+  </div>
+</section>
+
+<!-- SPORTS + GAMING -->
+<section id="sports" class="od-sec">
+  <div class="od-sec-num sr">03</div>
+  <h2 class="od-sec-title sr">IRL + Digital.</h2>
+  <p class="od-sec-sub sr">Sports, beatbox & everything in between</p>
+  <div class="sg-grid">
+    <div class="sg-card sr">
+      <span class="sg-icon">🏀</span>
+      <div class="sg-title">Basketball</div>
+      <div class="sg-desc">The court is the reset button. Nothing clears the head faster than a solid run. Favourite sport, no contest.</div>
+    </div>
+    <div class="sg-card sr" style="transition-delay:.1s">
+      <span class="sg-icon">🎤</span>
+      <div class="sg-title">Beatbox</div>
+      <div class="sg-desc">Yes, beatbox. The one thing that surprises everyone who finds out. Mouth music is more technical than people think.</div>
+    </div>
+    <div class="sg-card sr" style="transition-delay:.2s">
+      <span class="sg-icon">🎮</span>
+      <div class="sg-title">Gaming</div>
+      <div class="sg-desc">From brutal RPGs to racing — the game choices say a lot about the mindset.</div>
+      <ul class="sg-games">
+        <li>Elden Ring — patience, strategy, pain</li>
+        <li>Need for Speed — obvious reasons</li>
+        <li>FIFA 26 — weekly tradition, no excuses</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music" class="od-sec">
+  <div class="od-sec-num sr">04</div>
+  <h2 class="od-sec-title sr">On repeat.</h2>
+  <p class="od-sec-sub sr">Always playing something — headphones permanently on</p>
+  <div class="music-grid">
+    <div class="music-artists sr">
+      <div class="music-artist"><span class="music-artist-name">Drake</span><span class="music-artist-vibe">Mood music</span></div>
+      <div class="music-artist"><span class="music-artist-name">Juice WRLD</span><span class="music-artist-vibe">Late nights</span></div>
+      <div class="music-artist"><span class="music-artist-name">Travis Scott</span><span class="music-artist-vibe">The energy</span></div>
+      <div class="music-artist"><span class="music-artist-name">Baby Keem</span><span class="music-artist-vibe">Different wave</span></div>
+    </div>
+    <div class="music-right sr" style="transition-delay:.15s">
+      <div>
+        <div class="music-playing-label">Always playing</div>
+        <p class="music-note">Shuffle between all four depending on the mood, the time of day, and how deep the work is.</p>
+      </div>
+      <div class="eq">
+        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+        <div class="eq-bar"></div><div class="eq-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REELS -->
+<section id="reels" class="od-sec">
+  <div class="od-sec-num sr">05</div>
+  <h2 class="od-sec-title sr">Creating.</h2>
+  <p class="od-sec-sub sr">Weekly edits — life post-degree, documented</p>
+  <div class="reels-inner">
+    <div class="reels-text sr">
+      <h3>A 21-year-old<br><span>exploring</span><br>everything.</h3>
+      <p>Travel, food, lifestyle, motivation, reel trends — documenting life as it happens. Post-grad, figuring it all out, one edit at a time. No filters on the real stuff.</p>
+      <a href="https://www.instagram.com/randomviewsof21yearold?igsh=MXc3N21tY2IzOXdkMA%3D%3D&utm_source=qr" target="_blank" class="reels-btn">View on Instagram ↗</a>
+    </div>
+    <div class="reels-card sr" style="transition-delay:.15s">
+      <div class="reels-handle">@<span>randomviewsof21yearold</span></div>
+      <div class="reels-desc">Weekly edits documenting life post-graduation. Food spots, travel moments, motivation, trends — a 21-year-old exploring what actually comes after the degree.</div>
+      <div class="reels-tags">
+        <span class="reels-tag">Travel</span>
+        <span class="reels-tag">Food</span>
+        <span class="reels-tag">Lifestyle</span>
+        <span class="reels-tag">Motivation</span>
+        <span class="reels-tag">Weekly Edits</span>
+        <span class="reels-tag">Post-Grad Life</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="od-footer">
+    <span class="od-footer-l">© 2026 Samarth Joshi</span>
+    <span class="od-footer-r"><a href="index.html">← Back to Portfolio</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // CURSOR
+  const cd=document.getElementById('cd');
+  const cr=document.getElementById('cr');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cd.style.left=mx+'px';cd.style.top=my+'px';
+  });
+  (function loop(){
+    rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
+    cr.style.left=rx+'px';cr.style.top=ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.anime-card,.sg-card,.f1-stat,.music-artist').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cr.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cr.classList.remove('big'));
+  });
+
+  // NAV SCROLL
+  const nav=document.getElementById('back-nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+  // HERO IN
+  setTimeout(()=>{
+    ['od-label','ot1','ot2','od-sub','od-scroll'].forEach((id,i)=>{
+      setTimeout(()=>{const el=document.getElementById(id);if(el)el.classList.add('in');},i*140);
+    });
+  },150);
+
+  // SCROLL REVEAL
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+  // SPEED LINES
+  const sl=document.getElementById('speed-lines');
+  if(sl){
+    for(let i=0;i<14;i++){
+      const line=document.createElement('div');
+      line.className='speed-line';
+      line.style.cssText=`top:${Math.random()*100}%;width:${50+Math.random()*140}px;animation-delay:${Math.random()*2.5}s;animation-duration:${1.2+Math.random()*1.8}s;`;
+      sl.appendChild(line);
+    }
+  }
+})();
+</script>
+</body>
+</html>
